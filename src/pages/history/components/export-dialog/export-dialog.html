@@ -1,0 +1,33 @@
+<div class="export-dialog">
+  <div class="dialog-section">
+    <span class="label">Format</span>
+    <div class="format-row">
+      <button
+        class="format-btn"
+        [class.selected]="format() === 'json'"
+        (click)="format.set('json')"
+      ><i class="pi pi-file"></i> JSON</button>
+      <button
+        class="format-btn"
+        [class.selected]="format() === 'csv'"
+        (click)="format.set('csv')"
+      ><i class="pi pi-table"></i> CSV</button>
+    </div>
+  </div>
+
+  <div class="dialog-section preview-section">
+    <span class="label">Preview</span>
+    <textarea class="preview-area" [value]="content()" readonly rows="12"></textarea>
+  </div>
+
+  <div class="dialog-actions">
+    <button class="action-btn secondary-btn" (click)="close()">Cancel</button>
+    <button class="action-btn copy-btn" (click)="copyToClipboard()">
+      <i [class]="copied() ? 'pi pi-check' : 'pi pi-copy'"></i>
+      {{ copied() ? 'Copied!' : 'Copy' }}
+    </button>
+    <button class="action-btn download-btn" (click)="download()">
+      <i class="pi pi-download"></i> Download
+    </button>
+  </div>
+</div>

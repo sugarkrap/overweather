@@ -1,0 +1,87 @@
+<div class="history">
+  <div class="history-header">
+    <div class="header-left">
+      <h1 class="page-title"><i class="pi pi-list"></i> Match History</h1>
+      @if (totalCount() > 0) {
+        <span class="match-count">{{ totalCount() }} matches</span>
+      }
+    </div>
+    <div class="header-actions">
+      @if (accountOptions().length > 1) {
+        <select
+          class="account-select"
+          [value]="filterAccountID()"
+          (change)="onAccountChange($any($event.target).value)"
+        >
+          @for (opt of accountOptions(); track opt.value) {
+            <option [value]="opt.value">{{ opt.label }}</option>
+          }
+        </select>
+      }
+      <button class="action-btn import-btn" (click)="openImport()">
+        <i class="pi pi-upload"></i> Import
+      </button>
+      <button class="action-btn export-btn" (click)="openExport()" [disabled]="totalCount() === 0">
+        <i class="pi pi-download"></i> Export
+      </button>
+    </div>
+  </div>
+
+  @if (matches().length === 0) {
+    <div class="empty-state">
+      <i class="pi pi-inbox empty-icon"></i>
+      <p>No matches recorded yet.</p>
+      <p class="empty-sub">Log your first match from the dashboard!</p>
+    </div>
+  } @else {
+    <div class="match-list">
+      @for (match of matches(); track match.id) {
+        <div class="match-row" [class]="match.result.toLowerCase()">
+          <i class="result-icon" [class]="getResultIcon(match.result)"></i>
+
+          <div class="match-meta">
+            <span class="match-date">{{ formatDate(match.playedAt) }}</span>
+            <span class="match-time">{{ formatTime(match.playedAt) }}</span>
+          </div>
+
+          <i class="mode-icon" [class]="getGameModeIcon(match.gameMode)"></i>
+
+          @if (match.role) {
+            <i class="role-icon" [class]="getRoleIcon(match.role)"></i>
+          }
+
+          @if (match.queueSize) {
+            <span class="tag queue-tag">{{ match.queueSize }}</span>
+          }
+
+          @if (match.currentRank) {
+            <span class="tag rank-tag">{{ match.currentRank.tier }}{{ match.currentRank.subrank ? ' ' + match.currentRank.subrank : '' }}</span>
+          }
+
+          @for (mod of match.modifiers ?? []; track mod) {
+            <span class="tag mod-tag" [class]="getModifierClass(mod)">{{ getModifierLabel(mod) }}</span>
+          }
+
+          <button
+            class="type-btn"
+            [class]="getMatchTypeClass(match.matchType)"
+            (click)="cycleMatchType(match)"
+          >{{ getMatchTypeLabel(match.matchType) }}</button>
+
+          <div class="match-spacer"></div>
+
+
+          <button class="delete-btn" (click)="deleteMatch(match.id)">
+            <i class="pi pi-trash"></i>
+          </button>
+        </div>
+      }
+    </div>
+
+    @if (hasMore()) {
+      <div class="load-more-row">
+        <button class="load-more-btn" (click)="loadMore()">Load more</button>
+      </div>
+    }
+  }
+</div>

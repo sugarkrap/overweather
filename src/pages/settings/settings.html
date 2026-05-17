@@ -1,0 +1,92 @@
+<div class="settings">
+
+  <!-- Profile -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title"><i class="pi pi-user"></i> Profile</span>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <label class="field-label">Username</label>
+        <div class="field-row">
+          <input
+            class="text-input"
+            type="text"
+            placeholder="Your username"
+            [value]="usernameInput()"
+            (input)="usernameInput.set($any($event.target).value)"
+            (keydown.enter)="saveUsername()"
+          />
+          <button class="save-btn" (click)="saveUsername()">
+            <i [class]="usernameSaved() ? 'pi pi-check' : 'pi pi-save'"></i>
+            {{ usernameSaved() ? 'Saved!' : 'Save' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accounts -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title"><i class="pi pi-id-card"></i> Accounts</span>
+    </div>
+    <div class="card-body">
+      <p class="help-text">
+        Track matches per account. Select an account on the dashboard when logging a match.
+      </p>
+
+      @if (accounts().length > 0) {
+        <ul class="account-list">
+          @for (account of accounts(); track account.id) {
+            <li class="account-item">
+              @if (editingID() === account.id) {
+                <input
+                  class="text-input edit-input"
+                  [value]="editingName()"
+                  (input)="editingName.set($any($event.target).value)"
+                  (keydown.enter)="saveEdit()"
+                  (keydown.escape)="cancelEdit()"
+                  autofocus
+                />
+                <button class="icon-btn confirm-btn" (click)="saveEdit()">
+                  <i class="pi pi-check"></i>
+                </button>
+                <button class="icon-btn cancel-btn" (click)="cancelEdit()">
+                  <i class="pi pi-times"></i>
+                </button>
+              } @else {
+                <span class="account-name">{{ account.name }}</span>
+                <div class="account-actions">
+                  <button class="icon-btn edit-btn" (click)="startEdit(account)">
+                    <i class="pi pi-pencil"></i>
+                  </button>
+                  <button class="icon-btn delete-btn" (click)="deleteAccount(account.id)">
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </div>
+              }
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="empty-accounts">No accounts yet.</p>
+      }
+
+      <div class="add-account-row">
+        <input
+          class="text-input"
+          type="text"
+          placeholder="New account name"
+          [value]="newAccountName()"
+          (input)="newAccountName.set($any($event.target).value)"
+          (keydown.enter)="addAccount()"
+        />
+        <button class="add-btn" [disabled]="!newAccountName().trim()" (click)="addAccount()">
+          <i class="pi pi-plus"></i> Add
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

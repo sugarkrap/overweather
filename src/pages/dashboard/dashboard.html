@@ -1,0 +1,190 @@
+<div class="dashboard">
+
+  <!-- Match Log Card -->
+  <div class="card match-card">
+    <div class="card-header">
+      <div class="card-header-row">
+        <span class="card-title"><i class="pi pi-play"></i> Log a Match</span>
+
+        <!-- Game Mode -->
+        <div class="game-mode-selector">
+          @for (mode of gameModes; track mode.value) {
+            <button
+              class="toggle-btn"
+              [class.selected]="selectedGameMode() === mode.value"
+              (click)="selectGameMode(mode.value)"
+            ><i [class]="mode.icon"></i> {{ mode.label }}</button>
+          }
+        </div>
+
+        <!-- Account selector -->
+        @if (accountOptions().length > 1) {
+          <select class="account-select" [value]="selectedAccountID() ?? ''" (change)="selectAccount($any($event.target).value)">
+            @for (opt of accountOptions(); track opt.value) {
+              <option [value]="opt.value">{{ opt.label }}</option>
+            }
+          </select>
+        }
+      </div>
+    </div>
+
+    <div class="match-form">
+      <!-- Role -->
+      <div class="selector-row">
+        @for (role of roles; track role.value) {
+          <button
+            class="toggle-btn"
+            [class.selected]="selectedRole() === role.value"
+            (click)="selectRole(role.value)"
+          ><i [class]="role.icon"></i> {{ role.label }}</button>
+        }
+      </div>
+
+      <!-- Queue Size -->
+      <div class="selector-row">
+        @for (size of queueSizes; track size.value) {
+          <button
+            class="toggle-btn"
+            [class.selected]="selectedQueueSize() === size.value"
+            (click)="selectQueueSize(size.value)"
+          ><i [class]="size.icon"></i> {{ size.label }}</button>
+        }
+      </div>
+
+      <!-- Match Type -->
+      <div class="selector-row">
+        @for (type of matchTypes; track type.value) {
+          <button
+            class="toggle-btn"
+            [class.selected]="selectedMatchType() === type.value"
+            [class.type-fair]="type.value === 'FAIR'"
+            [class.type-unfair]="type.value === 'UNFAIR'"
+            [class.type-not-sure]="type.value === 'NOT_SURE'"
+            (click)="selectMatchType(type.value)"
+          ><i [class]="type.icon"></i> {{ type.label }}</button>
+        }
+      </div>
+
+      <!-- Queue Duration -->
+      <div class="selector-row">
+        <button
+          class="toggle-btn"
+          [class.selected]="selectedQueueDuration() === 'SHORT'"
+          (click)="selectQueueDuration('SHORT')"
+        ><i class="pi pi-bolt"></i> Short queue (<30s)</button>
+        <button
+          class="toggle-btn"
+          [class.selected]="selectedQueueDuration() === 'LONG'"
+          (click)="selectQueueDuration('LONG')"
+        ><i class="pi pi-clock"></i> Long queue (≥30s)</button>
+      </div>
+
+      <!-- Competitive-only modifiers -->
+      @if (isCompetitive()) {
+        <div class="selector-row">
+          @for (mod of modifiers; track mod.value) {
+            <button
+              [class]="getModifierBtnClass(mod)"
+              (click)="toggleModifier(mod.value)"
+              (mouseenter)="hoveredModifier.set(mod)"
+              (mouseleave)="hoveredModifier.set(null)"
+            >{{ mod.label }}</button>
+          }
+        </div>
+        <p class="modifier-hint" [class.empty]="!hoveredModifier()">
+          {{ hoveredModifier()?.desc ?? 'Hover a system tag to know more' }}
+        </p>
+
+        <!-- Rank -->
+        <div class="rank-section">
+          <span class="rank-label"><i class="pi pi-medal"></i> Rank</span>
+          <div class="rank-tiers">
+            @for (tier of rankTiers; track tier.value) {
+              <button
+                class="rank-btn"
+                [class]="'rank-btn rank-' + tier.value.toLowerCase()"
+                [class.selected]="selectedRankTier() === tier.value"
+                [title]="tier.label"
+                (click)="selectRankTier(tier.value)"
+              >{{ tier.abbr }}</button>
+            }
+          </div>
+          @if (selectedRankTier()) {
+            <div class="subrank-row">
+              @for (n of subrankNumbers; track n) {
+                <button
+                  class="subrank-btn"
+                  [class.selected]="selectedSubrank() === n"
+                  (click)="selectSubrank(n)"
+                >{{ n }}</button>
+              }
+            </div>
+            @if (selectedSubrank() !== null) {
+              <div class="rank-pct-row">
+                <span class="rank-pct-value">{{ rankPercentage() }}%</span>
+                <input
+                  type="range"
+                  class="rank-slider"
+                  min="0" max="100"
+                  [value]="rankPercentage()"
+                  (input)="rankPercentage.set(+$any($event.target).value)"
+                />
+              </div>
+            }
+          }
+        </div>
+      }
+
+      <!-- Result Buttons -->
+      <div class="result-buttons">
+        <button class="result-btn win-btn" [disabled]="submitting()" (click)="logMatch('WIN')">
+          <i class="pi pi-trophy"></i> WIN
+        </button>
+        <button class="result-btn draw-btn" [disabled]="submitting()" (click)="logMatch('DRAW')">
+          <i class="pi pi-minus"></i> DRAW
+        </button>
+        <button class="result-btn loss-btn" [disabled]="submitting()" (click)="logMatch('LOSS')">
+          <i class="pi pi-times"></i> LOSS
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  @if (stats().total > 0) {
+    <div class="section">
+      <h2 class="section-title"><i class="pi pi-chart-bar"></i> Your Stats</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value win">{{ stats().wins }}</div>
+          <div class="stat-label">Wins</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value loss">{{ stats().losses }}</div>
+          <div class="stat-label">Losses</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value purple">{{ stats().winRate }}%</div>
+          <div class="stat-label">Win Rate</div>
+        </div>
+        @if (stats().predictionAccuracy !== null) {
+          <div class="stat-card">
+            <div class="stat-value accent">{{ stats().predictionAccuracy }}%</div>
+            <div class="stat-label">Prediction Accuracy</div>
+          </div>
+        }
+      </div>
+
+      <!-- Recent matches -->
+      <div class="recent-matches">
+        @for (m of stats().recent; track m.playedAt) {
+          <div class="recent-match" [class]="m.result.toLowerCase()">
+            <i [class]="getResultIcon(m.result)"></i>
+            <span class="recent-time">{{ formatTime(m.playedAt) }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+</div>

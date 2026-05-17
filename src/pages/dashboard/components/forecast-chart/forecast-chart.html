@@ -1,0 +1,37 @@
+@if (points.length > 0) {
+  <div class="chart-wrapper">
+    <svg [attr.viewBox]="viewBox" class="chart-svg" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#a855f7" stop-opacity="0.25" />
+          <stop offset="100%" stop-color="#a855f7" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+
+      <path [attr.d]="fillPath" fill="url(#chartFill)" />
+      <path [attr.d]="linePath" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+
+      @for (pt of points; track pt.label) {
+        <circle
+          [attr.cx]="pt.x"
+          [attr.cy]="pt.y"
+          [attr.r]="pt.isCurrent ? 6 : 4"
+          [attr.fill]="pt.isCurrent ? '#f0abfc' : pt.isPast ? '#7c3aed' : '#a855f7'"
+          [attr.stroke]="pt.isCurrent ? '#e9d5ff' : 'none'"
+          stroke-width="2"
+          [attr.opacity]="pt.isPast && !pt.isCurrent ? 0.5 : 1"
+        />
+      }
+    </svg>
+
+    <div class="chart-labels">
+      @for (pt of points; track pt.label) {
+        <div class="chart-label" [class.current]="pt.isCurrent" [class.past]="pt.isPast && !pt.isCurrent">
+          <span class="label-icon">{{ pt.icon }}</span>
+          <span class="label-time">{{ pt.label }}</span>
+          <span class="label-score">{{ pt.value }}</span>
+        </div>
+      }
+    </div>
+  </div>
+}

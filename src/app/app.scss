@@ -1,0 +1,136 @@
+.app-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 64px;
+  background: linear-gradient(135deg, #1e0533 0%, #2d1054 100%);
+  border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+}
+
+.brand-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(90deg, #c084fc, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+
+  a {
+    padding: 8px 16px;
+    color: #c084fc;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+
+    &:hover {
+      color: #e9d5ff;
+      background: rgba(168, 85, 247, 0.15);
+    }
+
+    &.active {
+      color: #f0abfc;
+      background: rgba(168, 85, 247, 0.25);
+    }
+  }
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.username {
+  color: #c084fc;
+  font-size: 0.875rem;
+}
+
+.services-wrapper {
+  position: relative;
+}
+
+.services-btn {
+  padding: 7px 14px;
+  background: transparent;
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  color: #c084fc;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba(168, 85, 247, 0.2);
+    color: #e9d5ff;
+  }
+}
+
+.services-chevron {
+  font-size: 0.7rem;
+  transition: transform 0.15s;
+
+  &.open { transform: rotate(180deg); }
+}
+
+.services-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 200px;
+  background: #1e0533;
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  border-radius: 8px;
+  padding: 6px;
+  z-index: 200;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.services-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  color: #c084fc;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  transition: all 0.15s;
+
+  &:hover {
+    background: rgba(168, 85, 247, 0.2);
+    color: #e9d5ff;
+  }
+}
+
+.services-icon {
+  width: 20px;
+  text-align: center;
+}
+
+.app-main {
+  min-height: calc(100vh - 64px);
+}

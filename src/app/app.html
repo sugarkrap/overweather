@@ -1,0 +1,42 @@
+<nav class="app-nav">
+  <div class="nav-brand">
+    <span class="brand-logo">
+      <img alt="Overweather" width="32" height="32" ngSrc="/logo.png" />
+    </span>
+    <span class="brand-title" routerLink="/">Overweather</span>
+  </div>
+
+  <div class="nav-links">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Dashboard</a>
+    <a routerLink="/history" routerLinkActive="active">History</a>
+    <a routerLink="/settings" routerLinkActive="active">Settings</a>
+  </div>
+
+  <div class="nav-user">
+    @if (settings.getUsername()) {
+      <span class="username">{{ settings.getUsername() }}</span>
+    }
+
+    <div class="services-wrapper" (click)="$event.stopPropagation()">
+      <button class="services-btn" (click)="servicesOpen.set(!servicesOpen())">
+        Services <span class="services-chevron" [class.open]="servicesOpen()">▾</span>
+      </button>
+      @if (servicesOpen()) {
+        <div class="services-panel">
+          @for (svc of services; track svc.url) {
+            <a class="services-item" [href]="svc.url" target="_blank" (click)="servicesOpen.set(false)">
+              <i [class]="svc.icon"></i>
+              {{ svc.label }}
+            </a>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</nav>
+
+<main class="app-main">
+  <router-outlet />
+</main>
+
+<ow-dialog-outlet />

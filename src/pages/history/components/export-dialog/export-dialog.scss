@@ -1,0 +1,101 @@
+.export-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dialog-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.format-row {
+  display: flex;
+  gap: 8px;
+}
+
+.format-btn {
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  background: rgba(109, 40, 217, 0.1);
+  border: 1px solid rgba(109, 40, 217, 0.3);
+  color: #9ca3af;
+  transition: all 0.15s;
+
+  &:hover { border-color: rgba(168, 85, 247, 0.5); color: #c084fc; }
+  &.selected {
+    background: rgba(168, 85, 247, 0.2);
+    border-color: #a855f7;
+    color: #e9d5ff;
+    font-weight: 500;
+  }
+}
+
+.preview-section { flex: 1; }
+
+.preview-area {
+  width: 100%;
+  resize: vertical;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(109, 40, 217, 0.3);
+  border-radius: 8px;
+  color: #c084fc;
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  padding: 12px;
+  line-height: 1.5;
+  outline: none;
+  box-sizing: border-box;
+  min-height: 200px;
+  max-height: 360px;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.secondary-btn {
+  background: transparent;
+  border: 1px solid rgba(109, 40, 217, 0.3);
+  color: #9ca3af;
+
+  &:hover { border-color: rgba(168, 85, 247, 0.5); color: #c084fc; }
+}
+
+.copy-btn {
+  background: rgba(109, 40, 217, 0.15);
+  border: 1px solid rgba(109, 40, 217, 0.4);
+  color: #c084fc;
+  min-width: 96px;
+
+  &:hover { background: rgba(109, 40, 217, 0.25); border-color: #a855f7; }
+}
+
+.download-btn {
+  background: rgba(168, 85, 247, 0.2);
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  color: #e9d5ff;
+
+  &:hover { background: rgba(168, 85, 247, 0.3); border-color: #c084fc; }
+}

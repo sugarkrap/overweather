@@ -1,0 +1,25 @@
+@for (dialog of dialogService.activeDialogs(); track dialog.id) {
+  <div class="dialog-overlay" (click)="dismiss(dialog)">
+    <div class="dialog-container" (click)="$event.stopPropagation()">
+      @if (dialog.config.header) {
+        <div class="dialog-header">
+          @if (dialog.config.icon) {
+            <i [class]="dialog.config.icon"></i>
+          }
+          <span class="dialog-title">{{ dialog.config.header }}</span>
+          @if (dialog.config.closable !== false) {
+            <button class="dialog-close" (click)="dialog.ref.close()">
+              <i class="pi pi-times"></i>
+            </button>
+          }
+        </div>
+      }
+      <div class="dialog-body">
+        <ng-container
+          [ngComponentOutlet]="dialog.component"
+          [ngComponentOutletInjector]="getInjector(dialog)"
+        />
+      </div>
+    </div>
+  </div>
+}

@@ -1,0 +1,41 @@
+<div class="weather-card" [class]="current ? getWeatherClass(current.weather) : ''">
+  @if (loading) {
+    <div class="loading-state">
+      <ow-spinner size="lg" />
+      <p>Checking conditions...</p>
+    </div>
+  } @else if (current) {
+    <div class="weather-main">
+      <div class="weather-icon-large animate-float">
+        {{ getWeatherIcon(current.weather) }}
+      </div>
+      <div class="weather-info">
+        <div class="weather-score">
+          <span class="score-number">{{ current.overallScore }}</span>
+          <span class="score-total">/100</span>
+        </div>
+        <div class="weather-condition">{{ formatWeatherName(current.weather) }}</div>
+        <div class="weather-label">{{ formatWeatherLabel(current.weather) }}</div>
+      </div>
+    </div>
+
+    <div class="weather-meta">
+      <div class="meta-item">
+        <i class="pi pi-users"></i>
+        <span>{{ formatPlayerCount(current.playerCountAtTime) }} players online</span>
+      </div>
+      <div class="meta-item">
+        <i class="pi pi-clock"></i>
+        <span>Updated {{ formatTime(current.timestamp) }}</span>
+      </div>
+    </div>
+
+    <button class="refresh-btn" (click)="refresh.emit()">Refresh</button>
+  } @else {
+    <div class="offline-state">
+      <span class="offline-icon">🔌</span>
+      <p>Could not connect to API</p>
+      <button class="refresh-btn" (click)="refresh.emit()">Retry</button>
+    </div>
+  }
+</div>

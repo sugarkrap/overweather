@@ -1,0 +1,197 @@
+.settings {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Card */
+.card {
+  background: linear-gradient(135deg, #1e0533 0%, #2d1054 100%);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e9d5ff;
+}
+
+.card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Fields */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.field-row {
+  display: flex;
+  gap: 8px;
+}
+
+.text-input {
+  flex: 1;
+  padding: 9px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(109, 40, 217, 0.35);
+  border-radius: 8px;
+  color: #e9d5ff;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.15s;
+
+  &:focus { border-color: #a855f7; }
+  &::placeholder { color: #4b5563; }
+}
+
+.save-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  background: rgba(168, 85, 247, 0.2);
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  border-radius: 8px;
+  color: #e9d5ff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all 0.15s;
+  min-width: 88px;
+  justify-content: center;
+
+  &:hover { background: rgba(168, 85, 247, 0.3); border-color: #c084fc; }
+}
+
+/* Help text */
+.help-text {
+  font-size: 0.825rem;
+  color: #9ca3af;
+  line-height: 1.5;
+}
+
+/* Account list */
+.account-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.account-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(109, 40, 217, 0.08);
+  border: 1px solid rgba(109, 40, 217, 0.2);
+  border-radius: 8px;
+}
+
+.account-name {
+  flex: 1;
+  font-size: 0.875rem;
+  color: #e9d5ff;
+}
+
+.account-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.edit-input {
+  flex: 1;
+  padding: 5px 10px;
+  font-size: 0.875rem;
+}
+
+/* Icon buttons */
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  transition: all 0.15s;
+
+  i { font-size: 0.8rem; }
+}
+
+.edit-btn {
+  color: #9ca3af;
+  &:hover { background: rgba(109, 40, 217, 0.2); border-color: rgba(168, 85, 247, 0.4); color: #c084fc; }
+}
+
+.delete-btn {
+  color: #6b7280;
+  &:hover { background: rgba(248, 113, 113, 0.12); border-color: rgba(248, 113, 113, 0.4); color: #f87171; }
+}
+
+.confirm-btn {
+  color: #6b7280;
+  &:hover { background: rgba(74, 222, 128, 0.12); border-color: rgba(74, 222, 128, 0.4); color: #4ade80; }
+}
+
+.cancel-btn {
+  color: #6b7280;
+  &:hover { background: rgba(248, 113, 113, 0.12); border-color: rgba(248, 113, 113, 0.4); color: #f87171; }
+}
+
+.empty-accounts {
+  font-size: 0.825rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* Add account */
+.add-account-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  background: rgba(109, 40, 217, 0.15);
+  border: 1px solid rgba(109, 40, 217, 0.4);
+  border-radius: 8px;
+  color: #c084fc;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all 0.15s;
+
+  &:hover:not(:disabled) {
+    background: rgba(109, 40, 217, 0.25);
+    border-color: #a855f7;
+  }
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+}
